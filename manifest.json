@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "description": "This extension shows a hacker news articles on your new tab page",
+  "icons": {
+    "128": "images/logo128.png",
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png"
+  },
+  "name": "HNews Tab",
+  "permissions": [
+    "storage"
+  ],
+  "version": "1.0"
+}

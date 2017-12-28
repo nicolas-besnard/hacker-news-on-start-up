@@ -39,7 +39,6 @@ class App extends Component {
               <Item
                 post={post}
                 key={post.id}
-                isInternalLink={!post.url}
               />
             )}
           </FlipMove>

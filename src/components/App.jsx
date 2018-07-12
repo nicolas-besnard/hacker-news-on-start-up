@@ -27,23 +27,20 @@ class App extends Component {
             lastUpdated &&
             <p>Last Update: {moment(lastUpdated).format('DD/MM/YYYY @ HH:mm:ss')}</p>
           }
-          {
-
-            isFetching ? <Loader/> : <button onClick={requestArticlesWithForce}>
-              Reload top 20
-            </button>
-          }
-          </div>
-          <FlipMove className="items">
-            {this.props.articles.map((post) =>
-              <Item
-                post={post}
-                key={post.id}
-              />
-            )}
-          </FlipMove>
+          <button onClick={requestArticlesWithForce}>
+            {isFetching ? <Loader /> : "Reload top 20"}
+          </button>
         </div>
+        <FlipMove className="items">
+          {this.props.articles.map((post) =>
+            <Item
+              post={post}
+              key={post.id}
+            />
+          )}
+        </FlipMove>
       </div>
+    </div>
     );
   }
 }

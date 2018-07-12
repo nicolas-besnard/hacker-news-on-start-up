@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Helvetica Neue", "Lucida Grande", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -32,7 +36,7 @@ button {
 }
 
 .header {
-  background-color: #f60;
+  background-color: #FF742B;
   position: sticky;
   z-index: 999;
   height: 55px;
@@ -42,48 +46,15 @@ button {
 }
 
 .header .inner {
-  max-width: 800px;
-  box-sizing: border-box;
-  margin: 0px auto;
-  padding: 15px 5px;
-}
-
-.header a {
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 24px;
-  transition: color 0.15s ease;
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: 300;
-  letter-spacing: 0.075em;
-  margin-right: 1.8em;
-}
-
-.header a:hover {
-  color: #fff;
-}
-
-.header a.router-link-active {
-  color: #fff;
-  font-weight: 400;
-}
-
-.header a:nth-child(6) {
-  margin-right: 0;
-}
-
-.header .github {
-  color: #fff;
-  font-size: 0.9em;
-  margin: 0;
-  float: right;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-  width: 24px;
-  margin-right: 10px;
-  display: inline-block;
-  vertical-align: middle;
+  height: 50%;
 }
 
 .items-header {

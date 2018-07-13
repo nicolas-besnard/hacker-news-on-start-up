@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { requestArticles } from '../actions';
+import { getArticle } from '../reducers/articles';
 
 import moment from 'moment';
 import FlipMove from 'react-flip-move';
@@ -16,7 +17,7 @@ class App extends Component {
   }
 
   render() {
-    const { isFetching, lastUpdated, requestArticlesWithForce } = this.props;
+    const { articles, isFetching, lastUpdated, requestArticlesWithForce } = this.props;
 
     return (
       <div>
@@ -32,7 +33,7 @@ class App extends Component {
           </button>
         </div>
         <FlipMove className="items">
-          {this.props.articles.map((post) =>
+          {articles.map((post) =>
             <Item
               post={post}
               key={post.id}
@@ -50,17 +51,21 @@ App.propTypes = {
   articles: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return state;
+const mapStateToProps = state => {
+  const articles = state.articleIds
+    .map(articleId => getArticle(state.articles, articleId))
+    .filter(e => e);
+
+  return {
+    articles: articles,
+    lastUpdated: state.lastUpdated,
+    isFetching: state.isFetching
+  }
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  requestArticles() {
-    dispatch(requestArticles());
-  },
-  requestArticlesWithForce() {
-    dispatch(requestArticles(true));
-  }
+const mapDispatchToProps = dispatch => ({
+  requestArticles: () => dispatch(requestArticles()),
+  requestArticlesWithForce: () => dispatch(requestArticles(true))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

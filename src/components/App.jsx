@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { requestArticles } from '../actions';
 import { getArticle } from '../reducers/articles';
 
-import moment from 'moment';
+import { format } from 'date-fns';
 import FlipMove from 'react-flip-move';
 
 import Header from './Header.jsx';
@@ -26,7 +26,7 @@ class App extends Component {
           <div className="items-header">
           {
             lastUpdated &&
-            <p>Last Update: {moment(lastUpdated).format('DD/MM/YYYY @ HH:mm:ss')}</p>
+            <p>Last Update: {format(lastUpdated, 'DD/MM/YYYY @ HH:mm:ss')}</p>
           }
           <button onClick={requestArticlesWithForce}>
             {isFetching ? <Loader /> : "Reload top 20"}

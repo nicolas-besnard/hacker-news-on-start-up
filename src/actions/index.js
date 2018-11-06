@@ -1,5 +1,5 @@
 import axios from 'axios';
-import moment from 'moment';
+import { addMinutes } from 'date-fns';
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
@@ -65,7 +65,8 @@ const dispatchArticlesOrder = dispatch => articleIds => {
 const requestArticles = (force = false) => (dispatch, state) => {
   const { lastUpdated, articles: knownArticles } = state()
 
-  const updated30MinsAgo = moment(new Date()) >= moment(lastUpdated).add(30, 'minutes');
+  const now = new Date()
+  const updated30MinsAgo = now >= addMinutes(now, 30)
 
   if (force || lastUpdated === null || updated30MinsAgo) {
     dispatch({ type: REQUEST_ARTICLES });

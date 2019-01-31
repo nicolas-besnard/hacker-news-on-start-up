@@ -1,4 +1,4 @@
-import { RECEIVE_ARTICLES_ORDER } from '../actions'
+import {RECEIVE_ARTICLES_ORDER} from '../actions'
 
 export default (state = [], action) => {
   switch (action.type) {

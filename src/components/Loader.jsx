@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 class Loader extends Component {
   render() {
@@ -10,8 +10,8 @@ class Loader extends Component {
         <div className="rect4" />
         <div className="rect5" />
       </div>
-    );
+    )
   }
 }
 
-export default Loader;
+export default Loader

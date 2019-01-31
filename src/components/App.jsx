@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { requestArticles } from '../actions'
-import { getArticle } from '../reducers/articles'
+import {connect} from 'react-redux'
+import {requestArticles} from '../actions'
+import {getArticle} from '../reducers/articles'
 
-import { format } from 'date-fns'
+import {format} from 'date-fns'
 import FlipMove from 'react-flip-move'
 
 import Header from './Header.jsx'
@@ -17,28 +17,29 @@ class App extends Component {
   }
 
   render() {
-    const { articles, isFetching, lastUpdated, requestArticlesWithForce } = this.props
+    const {
+      articles,
+      isFetching,
+      lastUpdated,
+      requestArticlesWithForce,
+    } = this.props
 
     return (
       <div>
         <Header />
-        <div style={{ textAlign: 'center' }}>
+        <div style={{textAlign: 'center'}}>
           <div className="items-header">
-            {
-              lastUpdated &&
+            {lastUpdated && (
               <p>Last Update: {format(lastUpdated, 'DD/MM/YYYY @ HH:mm:ss')}</p>
-            }
+            )}
             <button onClick={requestArticlesWithForce}>
               {isFetching ? <Loader /> : 'Reload top 20'}
             </button>
           </div>
           <FlipMove className="items">
-            {articles.map((post) =>
-              <Item
-                post={post}
-                key={post.id}
-              />
-            )}
+            {articles.map(post => (
+              <Item post={post} key={post.id} />
+            ))}
           </FlipMove>
         </div>
       </div>
@@ -48,7 +49,7 @@ class App extends Component {
 
 App.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  articles: PropTypes.array.isRequired
+  articles: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -59,13 +60,16 @@ const mapStateToProps = state => {
   return {
     articles: articles,
     lastUpdated: state.lastUpdated,
-    isFetching: state.isFetching
+    isFetching: state.isFetching,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   requestArticles: () => dispatch(requestArticles()),
-  requestArticlesWithForce: () => dispatch(requestArticles(true))
+  requestArticlesWithForce: () => dispatch(requestArticles(true)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App)

@@ -19,9 +19,13 @@
     "start": "react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && ./post_build.sh",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write \"src/**/*.+(js|jsx)\""
   },
   "browserslist": [
     "last 1 chrome version"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^1.16.3"
+  }
 }

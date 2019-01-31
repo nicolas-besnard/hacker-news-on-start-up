@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 import articleIds from './articleIds'
 
 import articles from './articles'
@@ -9,5 +9,5 @@ export default combineReducers({
   articles,
   articleIds,
   isFetching,
-  lastUpdated
+  lastUpdated,
 })

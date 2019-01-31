@@ -1,4 +1,4 @@
-import { RECEIVE_ARTICLES } from '../actions'
+import {RECEIVE_ARTICLES} from '../actions'
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -10,7 +10,7 @@ export default (state = {}, action) => {
     default:
       return state
   }
-};
+}
 
 export const getArticle = (state, id) => {
   return state[id]

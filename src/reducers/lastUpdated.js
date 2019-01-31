@@ -1,4 +1,4 @@
-import { RECEIVE_ARTICLES } from '../actions'
+import {RECEIVE_ARTICLES} from '../actions'
 
 export default (state = null, action) => {
   switch (action.type) {
@@ -7,4 +7,4 @@ export default (state = null, action) => {
     default:
       return state
   }
-};
+}

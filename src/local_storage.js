@@ -1,24 +1,24 @@
-export const localStorageKey = 'reduxState';
+export const localStorageKey = 'reduxState'
 
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem(localStorageKey);
+    const serializedState = localStorage.getItem(localStorageKey)
 
     if (serializedState === null) {
-      return undefined;
+      return undefined
     }
 
-    return JSON.parse(serializedState);
+    return JSON.parse(serializedState)
   } catch (err) {
-    return undefined;
+    return undefined
   }
-};
+}
 
 export const saveState = (state) => {
   try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem(localStorageKey, serializedState);
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem(localStorageKey, serializedState)
   } catch (error) {
     // NOOP
   }
-};
+}

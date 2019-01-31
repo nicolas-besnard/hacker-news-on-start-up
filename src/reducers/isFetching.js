@@ -1,12 +1,12 @@
-import { RECEIVE_ARTICLES, REQUEST_ARTICLES } from '../actions';
+import { RECEIVE_ARTICLES, REQUEST_ARTICLES } from '../actions'
 
 export default (state = false, action) => {
   switch (action.type) {
     case REQUEST_ARTICLES:
-      return true;
+      return true
     case RECEIVE_ARTICLES:
-      return false;
+      return false
     default:
-      return state;
+      return state
   }
 };

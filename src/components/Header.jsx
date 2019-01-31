@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 import image from '../images/white-border.png'
 
@@ -7,11 +7,11 @@ class Header extends Component {
     return (
       <header className="header">
         <nav className="inner">
-          <img src={image} alt="" className="logo"/>
+          <img src={image} alt="" className="logo" />
         </nav>
       </header>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header

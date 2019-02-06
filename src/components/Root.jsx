@@ -1,16 +1,55 @@
-import React, {Component} from 'react'
-import {Provider} from 'react-redux'
-import configureStore from '../configure_store'
+import React, { Component } from 'react'
+import { requestArticles as getArticles } from '../actions'
+import { loadState, saveState } from '../local_storage'
+
 import App from './App.jsx'
 
-const store = configureStore()
+class Root extends Component {
+  state = {
+    articles: [],
+    isFetching: false,
+    lastUpdated: null,
+  }
 
-export default class Root extends Component {
+  componentDidMount() {
+    this.hydrateStateWithLocalStorage()
+      .then(this.requestArticles())
+  }
+
+  hydrateStateWithLocalStorage = () => {
+    const localStorageValues = loadState()
+
+    for (let key in this.state) {
+      if (localStorageValues.hasOwnProperty(key)) {
+        this.setState({[key]: localStorageValues[key]})
+      }
+    }
+
+    return Promise.resolve()
+  }
+
+  requestArticles = ({force = false} = {}) => async e => {
+    this.setState({isFetching: true})
+    const articles = await getArticles(force)(this.state)
+
+    if (!articles) {
+      this.setState({isFetching: false})
+      return
+    }
+
+    this.setState({articles, lastUpdated: new Date(), isFetching: false}, () => {
+      saveState(this.state)
+    })
+  }
+
   render() {
     return (
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App
+        {...this.state}
+        requestArticles={this.requestArticles}
+      />
     )
   }
 }
+
+export default Root

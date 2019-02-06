@@ -1,9 +1,6 @@
 import axios from 'axios'
 import { addMinutes } from 'date-fns'
 
-export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
-export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
-export const RECEIVE_ARTICLES_ORDER = 'RECEIVE_ARTICLES_ORDER'
 export const ARTICLES_PER_PAGE = 20
 
 const BASE_URL = 'https://hacker-news.firebaseio.com/v0'
@@ -50,25 +47,11 @@ const removeArticles = (newArticleIds, knownArticles) => newArticles =>
     return acc
   }, [])
 
-const dispatchArticles = dispatch => articles => {
-  dispatch(receiveArticles(articles))
-}
-
-const dispatchArticlesOrder = dispatch => articleIds => {
-  dispatch(receiveArticlesOrder(articleIds))
-
-  return articleIds
-}
-
-const requestArticles = (force = false) => async(dispatch, state) => {
-  const {lastUpdated, articles: knownArticles} = state()
-
+const requestArticles = (force = false) => async({lastUpdated, articles: knownArticles}) => {
   const now = new Date()
   const updated30MinsAgo = now >= addMinutes(lastUpdated, 30)
 
   if (force || lastUpdated === null || updated30MinsAgo) {
-    dispatch({type: REQUEST_ARTICLES})
-
     const knownArticleIds = Object.keys(knownArticles).map(articleId =>
       parseInt(articleId, 10),
     )
@@ -77,25 +60,10 @@ const requestArticles = (force = false) => async(dispatch, state) => {
     const data = await response.data
     const newArticleIds = await data.slice(0, ARTICLES_PER_PAGE)
 
-    dispatchArticlesOrder(dispatch)(newArticleIds)
-    Promise.resolve(filterKnownArticles(knownArticleIds)(newArticleIds))
+    return Promise.resolve(filterKnownArticles(knownArticleIds)(newArticleIds))
       .then(fetchArticles)
       .then(fetchArticlesContent)
       .then(removeArticles(newArticleIds, knownArticles))
-      .then(dispatchArticles(dispatch))
-  }
-}
-
-const receiveArticlesOrder = articleIds => ({
-  type: RECEIVE_ARTICLES_ORDER,
-  articleIds,
-})
-
-const receiveArticles = json => {
-  return {
-    type: RECEIVE_ARTICLES,
-    articles: json,
-    receivedAt: new Date(),
   }
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {addMinutes} from 'date-fns'
+import { addMinutes } from 'date-fns'
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
@@ -60,11 +60,11 @@ const dispatchArticlesOrder = dispatch => articleIds => {
   return articleIds
 }
 
-const requestArticles = (force = false) => (dispatch, state) => {
+const requestArticles = (force = false) => async(dispatch, state) => {
   const {lastUpdated, articles: knownArticles} = state()
 
   const now = new Date()
-  const updated30MinsAgo = now >= addMinutes(now, 30)
+  const updated30MinsAgo = now >= addMinutes(lastUpdated, 30)
 
   if (force || lastUpdated === null || updated30MinsAgo) {
     dispatch({type: REQUEST_ARTICLES})
@@ -73,18 +73,16 @@ const requestArticles = (force = false) => (dispatch, state) => {
       parseInt(articleId, 10),
     )
 
-    axios
-      .get(`${BASE_URL}/topstories.json`)
-      .then(response => response.data)
-      .then(data => data.slice(0, ARTICLES_PER_PAGE))
-      .then(newArticleIds => {
-        dispatchArticlesOrder(dispatch)(newArticleIds)
-        Promise.resolve(filterKnownArticles(knownArticleIds)(newArticleIds))
-          .then(fetchArticles)
-          .then(fetchArticlesContent)
-          .then(removeArticles(newArticleIds, knownArticles))
-          .then(dispatchArticles(dispatch))
-      })
+    const response = await axios.get(`${BASE_URL}/topstories.json`)
+    const data = await response.data
+    const newArticleIds = await data.slice(0, ARTICLES_PER_PAGE)
+
+    dispatchArticlesOrder(dispatch)(newArticleIds)
+    Promise.resolve(filterKnownArticles(knownArticleIds)(newArticleIds))
+      .then(fetchArticles)
+      .then(fetchArticlesContent)
+      .then(removeArticles(newArticleIds, knownArticles))
+      .then(dispatchArticles(dispatch))
   }
 }
 

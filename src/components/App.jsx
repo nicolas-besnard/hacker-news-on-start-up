@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import {format} from 'date-fns'
 import PropTypes from 'prop-types'
 import React from 'react'
 import FlipMove from 'react-flip-move'
@@ -7,12 +7,7 @@ import Header from './Header.jsx'
 import Item from './Item.jsx'
 import Loader from './Loader.jsx'
 
-function App({
-  articles,
-  isFetching,
-  lastUpdated,
-  requestArticles,
-}) {
+function App({articles, isFetching, lastUpdated, requestArticles}) {
   return (
     <div>
       <Header />
@@ -26,7 +21,9 @@ function App({
           </button>
         </div>
         <FlipMove className="items">
-          {articles.map(post => <Item post={post} key={post.id} />)}
+          {articles.map(post => (
+            <Item post={post} key={post.id} />
+          ))}
         </FlipMove>
       </div>
     </div>

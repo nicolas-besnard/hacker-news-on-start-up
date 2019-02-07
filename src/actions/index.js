@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { addMinutes } from 'date-fns'
+import {addMinutes} from 'date-fns'
 
 export const ARTICLES_PER_PAGE = 20
 
@@ -47,7 +47,10 @@ const removeArticles = (newArticleIds, knownArticles) => newArticles =>
     return acc
   }, [])
 
-const requestArticles = (force = false) => async({lastUpdated, articles: knownArticles}) => {
+const requestArticles = (force = false) => async ({
+  lastUpdated,
+  articles: knownArticles,
+}) => {
   const now = new Date()
   const updated30MinsAgo = now >= addMinutes(lastUpdated, 30)
 

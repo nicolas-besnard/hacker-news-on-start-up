@@ -42,19 +42,19 @@ class Root extends Component {
   requestArticles = ({force = false} = {}) => async e => {
     this.setState({isFetching: true})
 
-    const articles = await getArticles(force)(this.state)
+    try {
+      const articles = await getArticles(force)(this.state)
 
-    if (!articles) {
-      this.setState({isFetching: false})
-      return
-    }
+      if (!articles) {
+        return
+      }
 
-    this.setState(
-      {articles, lastUpdated: new Date(), isFetching: false},
-      () => {
+      this.setState({articles, lastUpdated: new Date()}, () => {
         saveState(this.state)
-      },
-    )
+      })
+    } finally {
+      this.setState({isFetching: false})
+    }
   }
 
   render() {
